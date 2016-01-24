@@ -1,0 +1,11 @@
+[alias]
+	st = status
+	staged = diff --cached
+	co = checkout
+[help]
+	autoCorrect = 10
+[core]
+	excludesfile = ~/.gitignore_global
+	editor = /usr/local/bin/vim
+[include]
+  path = ~/.gitconfig_local

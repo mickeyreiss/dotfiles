@@ -1,0 +1,4 @@
+alias bzb="bazel build //..."
+alias openx="open -a $(xcode-select -p) ."
+alias pd="psql knit-development knit"
+alias z="cd \$(find ~ -maxdepth 3 -type d | fzf)"
