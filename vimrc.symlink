@@ -69,10 +69,7 @@ nnoremap <silent> <Leader>fb :call fzf#run({
 " Tagbar
 
 nmap <Leader>tt :TagbarToggle<CR>
-
-" Goyo
-
-nmap <F8> :TagbarToggle<CR>
+" au FileType go :TagbarOpen
 
 " Go-Vim
 
@@ -96,8 +93,6 @@ let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_fmt_command = "goimports"
-
-au FileType go :TagbarOpen
 
 let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
