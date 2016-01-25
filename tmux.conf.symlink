@@ -3,6 +3,7 @@ set-option -g history-limit 10000
 set -g prefix C-a
 bind C-a send-prefix
 bind-key a send-prefix # Send a C-a with C-a a
+bind-key C-a last-window
 
 bind-key R source-file ~/.tmux.conf\; display "Reloaded ~/.tmux.conf!"
 
