@@ -4,6 +4,7 @@ Plug 'benmills/vimux'
 Plug 'chankaward/vim-railscasts-theme'
 Plug 'davidzchen/vim-bazel'
 Plug 'fatih/vim-go'
+Plug 'hashivim/vim-terraform'
 Plug 'https://github.com/google/protobuf', { 'rtp': 'editors/proto.vim' }
 Plug 'jlanzarotta/bufexplorer'
 Plug 'jtratner/vim-flavored-markdown'
@@ -108,7 +109,7 @@ map <Leader>cc :Commentary<CR>
 " Vimux
 
 nmap <Leader>vp :VimuxPromptCommand<CR>
-nmap <Leader>rl :VimuxRunLastCommand<CR>
+nmap <Leader>rl :wa<CR>:VimuxRunLastCommand<CR>
 
 " Vim Flavored Markdown
 augroup markdown

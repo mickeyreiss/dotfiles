@@ -2,6 +2,7 @@
 	st = status
 	staged = diff --cached
 	co = checkout
+	br = branch
 [help]
 	autoCorrect = 10
 [core]
@@ -9,3 +10,5 @@
 	editor = /usr/local/bin/vim
 [include]
   path = ~/.gitconfig_local
+[rebase]
+	autosquash = true

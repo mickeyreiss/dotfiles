@@ -1,4 +1,7 @@
 alias bzb="bazel build //..."
+alias bzt="bazel test //..."
 alias openx="open -a $(xcode-select -p) ."
 alias pd="psql knit-development knit"
 alias z="cd \$(find ~ -maxdepth 3 -type d | fzf)"
+alias tmuxcopy="tmux show-buffer | pbcopy"
+alias bzs="bazel run server server server/config.yml"

@@ -7,8 +7,6 @@ bind-key C-a last-window
 
 bind-key R source-file ~/.tmux.conf\; display "Reloaded ~/.tmux.conf!"
 
-set-option -g mouse on
-
 unbind l
 bind h select-pane -L
 bind j select-pane -D
@@ -17,9 +15,9 @@ bind l select-pane -R
 
 bind L choose-session
 
-# Split windows like Vim.
-bind v split-window -h
-bind s split-window -v
+bind c new-window -c "#{pane_current_path}"
+bind v split-window -h -c "#{pane_current_path}"
+bind s split-window -v -c "#{pane_current_path}"
 
 bind -r < resize-pane -L 4
 bind -r - resize-pane -D 4
@@ -71,7 +69,7 @@ set -g status-left ''
 set-option -g visual-activity off
 set-option -g visual-bell on
 set-option -g visual-silence off
-set-window-option -g monitor-activity off
+set-window-option -g monitor-activity on
 set-option -g bell-action none
 
 set -g default-terminal "screen-256color"
