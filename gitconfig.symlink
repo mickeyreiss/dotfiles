@@ -3,6 +3,7 @@
 	staged = diff --cached
 	co = checkout
 	br = branch
+	pul = pull
 [help]
 	autoCorrect = 10
 [core]
