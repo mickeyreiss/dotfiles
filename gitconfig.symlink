@@ -4,6 +4,7 @@
 	co = checkout
 	br = branch
 	pul = pull
+	dif = diff
 [help]
 	autoCorrect = 10
 [core]
@@ -13,3 +14,5 @@
   path = ~/.gitconfig_local
 [rebase]
 	autosquash = true
+[credential]
+	helper = osxkeychain

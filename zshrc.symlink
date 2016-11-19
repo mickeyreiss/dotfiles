@@ -35,8 +35,13 @@ fi
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
+export PATH="$PATH:$HOME/Library/Android/sdk/platform-tools"
+
 # The next line updates PATH for the Google Cloud SDK.
 source '/Users/mickeyreiss/google-cloud-sdk/path.zsh.inc'
 
 # The next line enables shell command completion for gcloud.
 source '/Users/mickeyreiss/google-cloud-sdk/completion.zsh.inc'
+
+export NVM_DIR="$HOME/.nvm"
+. "$(brew --prefix nvm)/nvm.sh"
