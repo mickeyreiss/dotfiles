@@ -16,3 +16,10 @@
 	autosquash = true
 [credential]
 	helper = osxkeychain
+[user]
+	email = mickeyreiss@gmail.com
+	name = Mickey Reiss
+[difftool]
+	prompt = true
+[merge]
+	tool = opendiff

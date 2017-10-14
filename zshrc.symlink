@@ -23,9 +23,11 @@ antigen apply
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export GOPATH=~/gopath
-export GO15VENDOREXPERIMENT=1
+# Vim
+export EDITOR=vim
 
+# Go
+export GOPATH=~/gopath
 export PATH="${PATH}:${GOPATH}/bin"
 
 # Local overrides
@@ -33,15 +35,24 @@ if [[ -f ~/.zshrc_local ]]; then
   source ~/.zshrc_local
 fi
 
+# rvm
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
-export PATH="$PATH:$HOME/Library/Android/sdk/platform-tools"
+# Android
+export ANDROID_HOME=${HOME}/Library/Android/sdk
+export PATH=${PATH}:${ANDROID_HOME}/tools
+export PATH=${PATH}:${ANDROID_HOME}/platform-tools
 
-# The next line updates PATH for the Google Cloud SDK.
-source '/Users/mickeyreiss/google-cloud-sdk/path.zsh.inc'
+# gcloud
+source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
+source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
 
-# The next line enables shell command completion for gcloud.
-source '/Users/mickeyreiss/google-cloud-sdk/completion.zsh.inc'
+# direnv
+eval "$(direnv hook zsh)"
 
-export NVM_DIR="$HOME/.nvm"
-. "$(brew --prefix nvm)/nvm.sh"
+if which nvm > /dev/null; then
+  export NVM_DIR="$HOME/.nvm"
+  . "$(brew --prefix nvm)/nvm.sh"
+fi
+
+export PATH="$PATH:$(yarn global bin)"

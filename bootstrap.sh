@@ -165,11 +165,23 @@ gitconfig () {
   success 'gitconfig'
 }
 
+vimplug () {
+  curl -sfLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+}
+
+npm () {
+  npm install -g react-native
+  npm install -g import-js
+}
+
 info 'Installing dotfiles...'
 dotfiles
 touchfiles
 homebrew
 gitconfig
+vimplug
+npm
 
 echo ''
 echo '  All installed!'
