@@ -49,6 +49,11 @@ source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.
 
 # direnv
 eval "$(direnv hook zsh)"
+# Python
+# source /usr/local/bin/virtualenvwrapper.sh
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+export PYTHONSTARTUP=~/.pythonrc
 
 if which nvm > /dev/null; then
   export NVM_DIR="$HOME/.nvm"
