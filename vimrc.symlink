@@ -1,17 +1,20 @@
 call plug#begin('~/.vim/plugged')
 
 " Plug 'Galooshi/vim-import-js' " https://github.com/Galooshi/vim-import-js/issues/14
-Plug 'Shougo/neocomplete.vim'
 Plug 'Galooshi/vim-import-js'
+Plug 'JuliaEditorSupport/julia-vim'
+Plug 'Shougo/neocomplete.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'benmills/vimux'
 Plug 'chankaward/vim-railscasts-theme'
 Plug 'fatih/vim-go'
+Plug 'flowtype/vim-flow'
 Plug 'google/vim-ft-bzl'
 Plug 'grassdog/tagman.vim'
 Plug 'hashivim/vim-terraform'
 Plug 'https://github.com/google/protobuf', { 'rtp': 'editors/proto.vim' }
 Plug 'jlanzarotta/bufexplorer'
+Plug 'jparise/vim-graphql'
 Plug 'jtratner/vim-flavored-markdown'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -31,7 +34,6 @@ Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/nginx.vim'
 Plug 'wannesm/wmgraphviz.vim'
-Plug 'JuliaEditorSupport/julia-vim'
 
 call plug#end()
 
@@ -139,7 +141,6 @@ nmap <Leader><Space> :Goyo<CR>
 " vim-commentary
 
 map <Leader>cc :Commentary<CR>
-autocmd FileType javascript.jsx setlocal commentstring={/*\ %s\ */}
 
 " Vimux
 

@@ -55,9 +55,7 @@ eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 export PYTHONSTARTUP=~/.pythonrc
 
-if which nvm > /dev/null; then
-  export NVM_DIR="$HOME/.nvm"
-  . "$(brew --prefix nvm)/nvm.sh"
-fi
+export NVM_DIR="$HOME/.nvm"
+. "$(brew --prefix nvm)/nvm.sh"
 
 export PATH="$PATH:$(yarn global bin)"
