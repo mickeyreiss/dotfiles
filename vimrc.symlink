@@ -3,12 +3,17 @@ call plug#begin('~/.vim/plugged')
 " Plug 'Galooshi/vim-import-js' " https://github.com/Galooshi/vim-import-js/issues/14
 Plug 'Galooshi/vim-import-js'
 Plug 'JuliaEditorSupport/julia-vim'
+Plug 'Quramy/tsuquyomi'
 Plug 'Shougo/neocomplete.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'benmills/vimux'
 Plug 'chankaward/vim-railscasts-theme'
-Plug 'fatih/vim-go'
+Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+Plug 'SirVer/ultisnips'
 Plug 'flowtype/vim-flow'
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install',
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
 Plug 'google/vim-ft-bzl'
 Plug 'grassdog/tagman.vim'
 Plug 'hashivim/vim-terraform'
@@ -21,10 +26,12 @@ Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'keith/swift.vim'
 Plug 'klen/python-mode'
+Plug 'leafgarland/typescript-vim'
 Plug 'majutsushi/tagbar'
 Plug 'mxw/vim-jsx'
 Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
 Plug 'pangloss/vim-javascript'
+Plug 'rhysd/vim-crystal'
 Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'scrooloose/syntastic'
 Plug 'tpope/vim-commentary'
@@ -104,6 +111,12 @@ nnoremap <silent> <Leader>fb :call fzf#run({
 nmap <Leader>tt :TagbarToggle<CR>
 " au FileType go :TagbarOpen
 
+" Snippets
+
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
 " Go-Vim
 
 au FileType go nmap <leader>gr :w<CR><Plug>(go-run)
@@ -121,6 +134,7 @@ au FileType go nmap <Leader>ge <Plug>(go-rename)
 
 au FileType go nmap <Leader>i <Plug>(go-info)
 
+let g:go_list_type = "quickfix"
 
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
@@ -130,9 +144,13 @@ let g:go_highlight_build_constraints = 1
 let g:go_fmt_command = "goimports"
 
 let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+" let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 let g:syntastic_javascript_checkers=['eslint']
 let g:syntastic_javascript_eslint_exe='$(npm bin)/eslint'
+
+" vim-prettier
+let g:prettier#config#bracket_spacing = 'true'
+
 
 " Goyo
 
@@ -173,8 +191,6 @@ augroup END
 let g:pymode_rope_goto_definition_bind = "<C-]>"
 let g:pymode_folding = 0
 
-
-
 " General
 nmap ZS :w<cr>
 nmap ZW :w<cr>
@@ -192,3 +208,7 @@ nmap <Leader><C-r> :source ~/.vimrc<CR> <bar> :PlugInstall<CR>
 if filereadable(expand('~/.vimrc_local'))
   source ~/.vimrc_local
 end
+
+" vim-flow
+let g:flow#autoclose=1
+let g:flow#flowpath='./node_modules/.bin/flow'
