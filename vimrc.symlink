@@ -6,9 +6,11 @@ Plug 'Quramy/tsuquyomi'
 Plug 'Shougo/neocomplete.vim'
 Plug 'SirVer/ultisnips'
 Plug 'airblade/vim-gitgutter'
+Plug 'andviro/flake8-vim'
 Plug 'benmills/vimux'
 Plug 'chankaward/vim-railscasts-theme'
 Plug 'codeindulgence/vim-tig'
+Plug 'dart-lang/dart-vim-plugin'
 Plug 'fatih/vim-go'
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 Plug 'flowtype/vim-flow'
@@ -32,6 +34,7 @@ Plug 'klen/python-mode'
 Plug 'leafgarland/typescript-vim'
 Plug 'majutsushi/tagbar'
 Plug 'mxw/vim-jsx'
+Plug 'nathangrigg/vim-beancount'
 Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
 Plug 'pangloss/vim-javascript'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
@@ -218,6 +221,10 @@ augroup autoformat_settings
   autocmd FileType python AutoFormatBuffer yapf
   " Alternative: autocmd FileType python AutoFormatBuffer autopep8
 augroup END
+
+" Beancount
+au FileType beancount inoremap . .<C-\><C-O>:AlignCommodity<CR>
+
 
 " General
 nmap ZS :w<cr>
