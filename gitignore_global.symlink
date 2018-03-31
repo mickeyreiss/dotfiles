@@ -1,6 +1,8 @@
 # Vim Turds
 *.swo
 *.swp
+*.swn
+*.swm
 
 # Ack config
 .ackrc
@@ -31,5 +33,9 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Python
 .ropeproject
+
+# Javascript
 yarn.lock

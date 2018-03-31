@@ -5,6 +5,10 @@
 	br = branch
 	pul = pull
 	dif = diff
+	difff = diff
+  pushn = push --no-verify
+  pushf = push --force
+  pushfn = push --force --no-verify
 [help]
 	autoCorrect = 10
 [core]
@@ -24,3 +28,8 @@
 	prompt = true
 [merge]
 	tool = opendiff
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f

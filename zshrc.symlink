@@ -44,18 +44,31 @@ export PATH=${PATH}:${ANDROID_HOME}/tools
 export PATH=${PATH}:${ANDROID_HOME}/platform-tools
 
 # gcloud
-source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
-source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
+if [ -f '/Users/mickeyreiss/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/mickeyreiss/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f '/Users/mickeyreiss/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/mickeyreiss/google-cloud-sdk/completion.zsh.inc'; fi
+
 
 # direnv
 eval "$(direnv hook zsh)"
+
+# Python
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+export PYTHONSTARTUP=~/.pythonrc
+
+# Node
+export NVM_DIR="$HOME/.nvm"
+. "$(brew --prefix nvm)/nvm.sh"
+export PATH="$PATH:$(yarn global bin)"
+
+# Ruby
+eval "$(rbenv init -)"
+
 # Python
 # source /usr/local/bin/virtualenvwrapper.sh
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 export PYTHONSTARTUP=~/.pythonrc
 
-export NVM_DIR="$HOME/.nvm"
-. "$(brew --prefix nvm)/nvm.sh"
 
-export PATH="$PATH:$(yarn global bin)"
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

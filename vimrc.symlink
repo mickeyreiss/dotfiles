@@ -1,23 +1,26 @@
 call plug#begin('~/.vim/plugged')
 
-" Plug 'Galooshi/vim-import-js' " https://github.com/Galooshi/vim-import-js/issues/14
 Plug 'Galooshi/vim-import-js'
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'Quramy/tsuquyomi'
 Plug 'Shougo/neocomplete.vim'
+Plug 'SirVer/ultisnips'
 Plug 'airblade/vim-gitgutter'
 Plug 'benmills/vimux'
 Plug 'chankaward/vim-railscasts-theme'
+Plug 'codeindulgence/vim-tig'
+Plug 'fatih/vim-go'
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
-Plug 'SirVer/ultisnips'
 Plug 'flowtype/vim-flow'
-Plug 'prettier/vim-prettier', {
-  \ 'do': 'yarn install',
-  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
+Plug 'google/vim-codefmt'
 Plug 'google/vim-ft-bzl'
+Plug 'google/vim-glaive'
+Plug 'google/vim-maktaba'
 Plug 'grassdog/tagman.vim'
+Plug 'hail2u/vim-css3-syntax'
 Plug 'hashivim/vim-terraform'
 Plug 'https://github.com/google/protobuf', { 'rtp': 'editors/proto.vim' }
+Plug 'itchyny/vim-pdf'
 Plug 'jlanzarotta/bufexplorer'
 Plug 'jparise/vim-graphql'
 Plug 'jtratner/vim-flavored-markdown'
@@ -31,9 +34,12 @@ Plug 'majutsushi/tagbar'
 Plug 'mxw/vim-jsx'
 Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
 Plug 'pangloss/vim-javascript'
+Plug 'prettier/vim-prettier', { 'do': 'yarn install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
 Plug 'rhysd/vim-crystal'
 Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'scrooloose/syntastic'
+Plug 'styled-components/vim-styled-components'
+Plug 'tmhedberg/matchit'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rails'
@@ -52,7 +58,6 @@ set incsearch
 set number
 set shiftwidth=2
 set smartcase
-au FileType text,markdown,ghmarkdown set spell
 set tabstop=2
 set backspace=indent,eol,start
 set hidden
@@ -63,6 +68,14 @@ syntax on
 filetype plugin indent on
 
 colorscheme railscasts
+set colorcolumn=100
+
+set hidden
+
+" Spelling
+au FileType text,markdown,ghmarkdown,gitcommit set spell
+hi clear SpellBad
+hi SpellBad cterm=underline ctermfg=red
 
 set hidden
 
@@ -78,7 +91,7 @@ nmap <Leader>nf :NERDTreeFind<CR>
 let NERDTreeIgnore = ['\~$']
 
 " Fuzzy find
-let $FZF_DEFAULT_COMMAND = 'git ls-files --cached --others --exclude-standard'
+let $FZF_DEFAULT_COMMAND = 'git ls-files --cached --others --exclude-standard | uniq'
 nmap <Leader>ff :FZF<CR>
 nmap <Leader>fb :Buffers<CR>
 
@@ -144,13 +157,12 @@ let g:go_highlight_build_constraints = 1
 let g:go_fmt_command = "goimports"
 
 let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-" let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 let g:syntastic_javascript_checkers=['eslint']
-let g:syntastic_javascript_eslint_exe='$(npm bin)/eslint'
+let g:syntastic_javascript_eslint_exe='$(yarn global bin)/eslint'
+let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go', 'javascript', 'python'] }
 
 " vim-prettier
 let g:prettier#config#bracket_spacing = 'true'
-
 
 " Goyo
 
@@ -159,6 +171,7 @@ nmap <Leader><Space> :Goyo<CR>
 " vim-commentary
 
 map <Leader>cc :Commentary<CR>
+" autocmd FileType javascript.jsx setlocal commentstring={/*\ %s\ */}
 
 " Vimux
 
@@ -188,8 +201,23 @@ augroup END
 
 " Python
 " let g:pymode_python = 'python3'
-let g:pymode_rope_goto_definition_bind = "<C-]>"
 let g:pymode_folding = 0
+let g:pymode_rope = 0
+let g:pymode_rope_goto_definition_bind = "<C-]>"
+let g:pymode_rope_lookup_project = 0
+
+" Autofmt
+augroup autoformat_settings
+  autocmd FileType bzl AutoFormatBuffer buildifier
+  autocmd FileType c,cpp,proto AutoFormatBuffer clang-format
+  autocmd FileType dart AutoFormatBuffer dartfmt
+  autocmd FileType go AutoFormatBuffer gofmt
+  autocmd FileType gn AutoFormatBuffer gn
+  " autocmd FileType html,css,json AutoFormatBuffer js-beautify
+  autocmd FileType java AutoFormatBuffer google-java-format
+  autocmd FileType python AutoFormatBuffer yapf
+  " Alternative: autocmd FileType python AutoFormatBuffer autopep8
+augroup END
 
 " General
 nmap ZS :w<cr>
