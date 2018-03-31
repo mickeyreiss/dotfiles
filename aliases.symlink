@@ -10,3 +10,7 @@ alias bzp="bazel build //protos"
 alias w="cd ~/code/github.com/wise-inc/w-i-s-e"
 alias wip="git commit -a -m wip -e"
 alias watch="watch -n1"
+
+function clone() {
+  hub clone "git@github.com:${1?}" "${HOME?}/code/github.com/${1?}"
+}
