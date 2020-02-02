@@ -1,23 +1,65 @@
 set -o vi
 
-source ~/.antigen.zsh
+# TO DELETE:
+# source ~/antigen.zsh
 
-# Load the oh-my-zsh's library.
-antigen use oh-my-zsh
+# antigen use oh-my-zsh
 
-# Bundles from the default repo (robbyrussell's oh-my-zsh).
-antigen bundle git
-antigen bundle heroku
-antigen bundle command-not-found
+# antigen bundle command-not-found
+# antigen bundle docker
+# antigen bundle git
+# antigen bundle kubectl
+# antigen bundle git-auto-fetch
+# antigen bundle yarn
+# antigen bundle pip
+# antigen bundle unixorn/docker-helpers.zshplugin
+# antigen bundle zsh-users/zsh-syntax-highlighting
 
-# Syntax highlighting bundle.
-antigen bundle zsh-users/zsh-syntax-highlighting
+# antigen theme afowler
+# antigen theme bureau
 
-# Load the theme.
-antigen theme afowler
+# antigen apply
 
-# Tell antigen that you're done.
-antigen apply
+# antibody https://getantibody.github.io/
+# source <(antibody init) # use this for dynamic loading
+ZSH="$(antibody home)/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh"
+source ~/.zsh_plugins.sh
+
+# Redo the antibody static bundle
+antibody_rebundle() {
+  antibody bundle < ~/.zsh_plugins.txt > ~/.zsh_plugins.sh
+}
+
+# Add kubectl to theme (https://github.com/jonmosco/kube-ps1)
+KUBE_PS1_NS_ENABLE=false
+KUBE_PS1_PREFIX='['
+KUBE_PS1_SUFFIX=']'
+function get_cluster_short() {
+  if [[ $1 =~ prod ]]; then
+    COLOR=red
+  elif [[ $1 =~ staging ]]; then
+    COLOR=yellow
+  elif [[ $1 =~ docker-desktop ]]; then
+    COLOR=white
+  else
+    COLOR=cyan
+  fi
+  echo -n $(_kube_ps1_color_fg ${COLOR:?})
+  printf "$1" | cut -d _ -f4
+}
+KUBE_PS1_SEPARATOR=''
+# KUBE_PS1_CTX_COLOR='red
+KUBE_PS1_CLUSTER_FUNCTION='get_cluster_short'
+
+
+last_exit_code() {
+  EXIT_CODE=$?
+  if [[ ${EXIT_CODE:?} -gt 0 ]]; then
+    printf "[exit code ${EXIT_CODE?}]"
+  fi
+}
+
+RPROMPT="\$(last_exit_code) ${RPROMPT} \$(kube_ps1)"
 
 . ~/.aliases
 
@@ -29,8 +71,11 @@ export FZF_DEFAULT_COMMAND='fd --type f --type d . --follow --exclude .git ~'
 export EDITOR=vim
 
 # Go
-export GOPATH=~/gopath
-export PATH="${PATH}:${GOPATH}/bin"
+export GOPATH=~/go
+export PATH="${PATH}:/usr/local/sbin:${GOPATH}/bin"
+
+# git
+alias rebase='git rebase -i origin/master'
 
 # Local overrides
 if [[ -f ~/.zshrc_local ]]; then
@@ -38,7 +83,7 @@ if [[ -f ~/.zshrc_local ]]; then
 fi
 
 # rvm
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+# export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 # Android
 export ANDROID_HOME=${HOME}/Library/Android/sdk
@@ -54,18 +99,13 @@ fi
 if [ -f '/Users/mickeyreiss/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/mickeyreiss/google-cloud-sdk/path.zsh.inc'; fi
 if [ -f '/Users/mickeyreiss/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/mickeyreiss/google-cloud-sdk/completion.zsh.inc'; fi
 
-
 # direnv
 eval "$(direnv hook zsh)"
 
 # Python
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-export PYTHONSTARTUP=~/.pythonrc
+export PATH="${PATH}:/usr/local/opt/python/libexec/bin"
 
-# Node
-export NVM_DIR="$HOME/.nvm"
-. "$(brew --prefix nvm)/nvm.sh"
+# Yarn
 export PATH="$PATH:$(yarn global bin)"
 
 # Ruby
@@ -73,6 +113,39 @@ eval "$(rbenv init -)"
 
 # Python
 # source /usr/local/bin/virtualenvwrapper.sh
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-export PYTHONSTARTUP=~/.pythonrc
+# eval "$(pyenv init -)"
+# eval "$(pyenv virtualenv-init -)"
+# export PYTHONSTARTUP=~/.pythonrc
+
+pyenv() {
+  unset -f pyenv
+  echo "loading pyenv"
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
+  export PYTHONSTARTUP=~/.pythonrc
+}
+
+
+rbenv() {
+  unset -f rbenv
+  echo "loading rbenv"
+  # Ruby
+  eval "$(rbenv init -)"
+  rbenv $*
+}
+
+# fnm
+eval "$(fnm env --multi --use-on-cd)"
+
+# plz
+export PATH="${PATH}:${HOME}/.please"
+export PATH="${PATH}:${HOME}/.please"
+source <(plz --completion_script)
+
+# ulimit
+if [[ "$(uname)" == "Darwin" ]]; then
+  ulimit -n 10000
+fi
+
+# kubectl
+source <(kubectl completion zsh)

@@ -3,6 +3,8 @@
 *.swp
 *.swn
 *.swm
+*.swl
+.*.un~
 
 # Ack config
 .ackrc
@@ -36,6 +38,3 @@ Temporary Items
 
 # Python
 .ropeproject
-
-# Javascript
-yarn.lock

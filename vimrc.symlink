@@ -1,23 +1,23 @@
 call plug#begin('~/.vim/plugged')
 
+Plug 'Shougo/vimshell'
+Plug 'sebdah/vim-delve'
+Plug 'bazelbuild/vim-ft-bzl'
+Plug 'scrooloose/syntastic', { 'for': ['sh'] }
+Plug 'avakhov/vim-yaml'
 Plug 'Galooshi/vim-import-js'
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'Quramy/tsuquyomi'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/neocomplete.vim'
-Plug 'SirVer/ultisnips'
 Plug 'airblade/vim-gitgutter'
 Plug 'andviro/flake8-vim'
 Plug 'benmills/vimux'
 Plug 'chankaward/vim-railscasts-theme'
 Plug 'codeindulgence/vim-tig'
 Plug 'dart-lang/dart-vim-plugin'
-Plug 'fatih/vim-go'
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 Plug 'flowtype/vim-flow'
-Plug 'google/vim-codefmt'
-Plug 'google/vim-ft-bzl'
-Plug 'google/vim-glaive'
-Plug 'google/vim-maktaba'
 Plug 'grassdog/tagman.vim'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'hashivim/vim-terraform'
@@ -27,29 +27,40 @@ Plug 'jlanzarotta/bufexplorer'
 Plug 'jparise/vim-graphql'
 Plug 'jtratner/vim-flavored-markdown'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/rainbow_parentheses.vim'
+Plug 'junegunn/gv.vim', { 'on': 'GV' }
 Plug 'junegunn/fzf.vim'
-Plug 'junegunn/goyo.vim'
+Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
 Plug 'keith/swift.vim'
-Plug 'klen/python-mode'
+Plug 'klen/python-mode', { 'for': ['python'] }
 Plug 'leafgarland/typescript-vim'
 Plug 'majutsushi/tagbar'
+Plug 'mdempsky/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
 Plug 'mxw/vim-jsx'
 Plug 'nathangrigg/vim-beancount'
+Plug 'natebosch/vim-lsc'
 Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
 Plug 'pangloss/vim-javascript'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
 Plug 'rhysd/vim-crystal'
 Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] }
-Plug 'scrooloose/syntastic'
 Plug 'styled-components/vim-styled-components'
 Plug 'tmhedberg/matchit'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-haml', { 'for': ['scss', 'css', 'sass', 'haml'] }
 Plug 'tpope/vim-rails'
+Plug 'tpope/vim-rhubarb'
+Plug 'tpope/vim-sleuth'
+Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
+Plug 'uber/prototool', { 'rtp': 'vim' }
+Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/nginx.vim'
 Plug 'wannesm/wmgraphviz.vim'
+Plug 'mxw/vim-prolog'
 
 call plug#end()
 
@@ -73,14 +84,7 @@ filetype plugin indent on
 colorscheme railscasts
 set colorcolumn=100
 
-set hidden
-
-" Spelling
-au FileType text,markdown,ghmarkdown,gitcommit set spell
-hi clear SpellBad
-hi SpellBad cterm=underline ctermfg=red
-
-set hidden
+nmap <Space> <C-d>
 
 " Spelling
 au FileType text,markdown,ghmarkdown,gitcommit set spell
@@ -121,6 +125,20 @@ nnoremap <silent> <Leader>fb :call fzf#run({
 \   'options': '+m',
 \   'down':    len(<sid>buflist()) + 2
 \ })<CR>
+
+" rainbow
+" Activation based on file type
+augroup rainbow
+  autocmd!
+  autocmd FileType javascript,typescript,javascript.jsx,typescript.jsx RainbowParentheses
+  autocmd FileType go RainbowParentheses
+augroup END
+
+augroup firemodel
+  autocmd!
+  autocmd FileType firemodel :set filetypet=proto<CR>
+augroup END
+
 
 " Tagbar
 
@@ -189,14 +207,15 @@ augroup END
 
 " Vim Airline
 
-set laststatus=2
-let g:airline_theme="raven"
+set laststatus=2 statusline=%02n:%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
+let g:airline_theme="base16_grayscale"
+let g:airline_section_a=airline#section#create(['crypt', 'paste', 'spell', 'iminsert'])
 
 " JSX
 let g:jsx_ext_required = 0 " .js files as jsx
 
 " vim-import-js
-augroup javascript
+augroup javascript,typescript
   au!
   " au BufWritePre *.js,*.jsx :ImportJSFix
   nmap <C-]> :silent ImportJSGoto<CR>
@@ -210,17 +229,17 @@ let g:pymode_rope_goto_definition_bind = "<C-]>"
 let g:pymode_rope_lookup_project = 0
 
 " Autofmt
-augroup autoformat_settings
-  autocmd FileType bzl AutoFormatBuffer buildifier
-  autocmd FileType c,cpp,proto AutoFormatBuffer clang-format
-  autocmd FileType dart AutoFormatBuffer dartfmt
-  autocmd FileType go AutoFormatBuffer gofmt
-  autocmd FileType gn AutoFormatBuffer gn
+" augroup autoformat_settings
+  " autocmd FileType bzl AutoFormatBuffer buildifier
+  " autocmd FileType c,cpp AutoFormatBuffer clang-format
+  " autocmd FileType dart AutoFormatBuffer dartfmt
+  " autocmd FileType go AutoFormatBuffer gofmt
+  " autocmd FileType gn AutoFormatBuffer gn
   " autocmd FileType html,css,json AutoFormatBuffer js-beautify
-  autocmd FileType java AutoFormatBuffer google-java-format
-  autocmd FileType python AutoFormatBuffer yapf
+  " autocmd FileType java AutoFormatBuffer google-java-format
+  " autocmd FileType python AutoFormatBuffer yapf
   " Alternative: autocmd FileType python AutoFormatBuffer autopep8
-augroup END
+" augroup END
 
 " Beancount
 au FileType beancount inoremap . .<C-\><C-O>:AlignCommodity<CR>
@@ -232,6 +251,30 @@ nmap ZW :w<cr>
 abbr W w
 nmap <Leader>nh :nohlsearch<CR>
 nmap <Leader><C-r> :source ~/.vimrc<CR> <bar> :PlugInstall<CR>
+
+" Protect changes between writes. Default values of
+" updatecount (200 keystrokes) and updatetime
+" (4 seconds) are fine
+set swapfile
+set directory^=~/.vim/swap//
+
+" protect against crash-during-write
+set writebackup
+" but do not persist backup after successful write
+set nobackup
+" use rename-and-write-new method whenever safe
+set backupcopy=auto
+" patch required to honor double slash at end
+if has("patch-8.1.0251")
+    " consolidate the writebackups -- not a big
+    " deal either way, since they usually get deleted
+    set backupdir^=~/.vim/backup//
+end
+
+" persist the undo tree for each file
+set undodir=~/.vim/undo//
+set backupdir=~/.vim/backup//
+set directory=~/.vim/swap//
 
 "-------- Local Overrides
 ""If you have options you'd like to override locally for
@@ -247,3 +290,25 @@ end
 " vim-flow
 let g:flow#autoclose=1
 let g:flow#flowpath='./node_modules/.bin/flow'
+
+" LangServer
+"
+let g:LanguageClient_serverCommands = {
+      \ 'typescript': ['/usr/local/bin/javascript-typescript-stdio'],
+      \ 'typescript.jsx': ['/usr/local/bin/javascript-typescript-stdio'],
+      \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
+      \ 'javascript.jsx': ['/usr/local/bin/javascript-typescript-stdio'],
+      \ 'python': ['pyls'],
+      \ 'go': ['go-langserver'],
+      \ }
+
+
+map <Leader><Enter> :call LanguageClient_contextMenu()<CR>
+" Or map each action separately
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+
+" Yaml
+au! BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab

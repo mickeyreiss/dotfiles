@@ -1,35 +1,46 @@
 [alias]
-	st = status
-	staged = diff --cached
-	co = checkout
-	br = branch
-	pul = pull
-	dif = diff
-	difff = diff
+  st = status
+  staged = diff --cached
+  co = checkout
+  br = branch
+  pul = pull
+  dif = diff
+  difff = diff
   pushn = push --no-verify
   pushf = push --force
   pushfn = push --force --no-verify
+  hooks = !~/.githooks/bin/githooks
+  recent-branches="for-each-ref --sort=-committerdate --count=20 --format='%(committerdate:relative) · %(refname:short)' refs/heads refs/tags"
 [help]
-	autoCorrect = 10
+  autoCorrect = 10
 [core]
-	excludesfile = ~/.gitignore_global
-	editor = /usr/local/bin/vim
-	pager = less -F -X
+  excludesfile = ~/.gitignore_global
+  editor = /usr/local/bin/vim
+  pager = less -F -X
 [include]
   path = ~/.gitconfig_local
 [rebase]
-	autosquash = true
+  autosquash = true
+  autoStash = true
+  missingCommitsCheck = warn
 [credential]
-	helper = osxkeychain
-[user]
-	email = mickeyreiss@gmail.com
-	name = Mickey Reiss
+  helper = osxkeychain
 [difftool]
-	prompt = true
+  prompt = true
 [merge]
-	tool = opendiff
-[filter "lfs"]
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
-	clean = git-lfs clean -- %f
+	tool = vimdiff
+[url "git@github.com:"]
+  insteadOf = https://github.com/
+[push]
+  default = upstream
+[http]
+  cookiefile = /Users/mickeyreiss/.gitcookies
+[pull]
+	rebase = true
+[user]
+	useConfigOnly = true
+	signingkey = 47C64C4168B9B69F20BACB6349C2D4872FCD9D9E
+	name = Mickey Reiss
+	email = mickey@visor.com
+[diff "sopsdiffer"]
+	textconv = sops -d
