@@ -41,7 +41,7 @@ Plug 'nathangrigg/vim-beancount'
 Plug 'natebosch/vim-lsc'
 Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
 Plug 'pangloss/vim-javascript'
-Plug 'prettier/vim-prettier', { 'do': 'yarn install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
+Plug 'prettier/vim-prettier', { 'do': 'yarn install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
 Plug 'rhysd/vim-crystal'
 Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'styled-components/vim-styled-components'
@@ -184,6 +184,11 @@ let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go', 'java
 
 " vim-prettier
 let g:prettier#config#bracket_spacing = 'true'
+let g:prettier#autoformat = 1
+let g:prettier#autoformat_require_pragma = 0
+" let g:prettier#autoformat_config_present = 1
+" let g:prettier#quickfix_enabled = 0
+
 
 " Goyo
 

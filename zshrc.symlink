@@ -1,25 +1,5 @@
 set -o vi
 
-# TO DELETE:
-# source ~/antigen.zsh
-
-# antigen use oh-my-zsh
-
-# antigen bundle command-not-found
-# antigen bundle docker
-# antigen bundle git
-# antigen bundle kubectl
-# antigen bundle git-auto-fetch
-# antigen bundle yarn
-# antigen bundle pip
-# antigen bundle unixorn/docker-helpers.zshplugin
-# antigen bundle zsh-users/zsh-syntax-highlighting
-
-# antigen theme afowler
-# antigen theme bureau
-
-# antigen apply
-
 # antibody https://getantibody.github.io/
 # source <(antibody init) # use this for dynamic loading
 ZSH="$(antibody home)/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh"
@@ -63,6 +43,12 @@ RPROMPT="\$(last_exit_code) ${RPROMPT} \$(kube_ps1)"
 
 . ~/.aliases
 
+export HISTSIZE=100000000
+export SAVEHIST=100000000
+setopt HIST_VERIFY
+setopt HIST_IGNORE_SPACE
+setopt INC_APPEND_HISTORY
+
 # FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='fd --type f --type d . --follow --exclude .git ~'
@@ -72,7 +58,7 @@ export EDITOR=vim
 
 # Go
 export GOPATH=~/go
-export PATH="${PATH}:/usr/local/sbin:${GOPATH}/bin"
+export PATH="${PATH}:/usr/local/sbin:${GOPATH}/bin:/usr/local/go/bin"
 
 # git
 alias rebase='git rebase -i origin/master'
