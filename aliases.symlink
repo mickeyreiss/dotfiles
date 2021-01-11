@@ -37,3 +37,6 @@ if [[ $OSTYPE == darwin* ]]; then
   alias music="open -a /Applications/Music.app"
 fi
 
+if [[ -r ~/.aliases_local ]]; then
+  source ~/.aliases_local
+fi
