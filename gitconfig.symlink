@@ -32,15 +32,15 @@
 [url "git@github.com:"]
   insteadOf = https://github.com/
 [push]
-  default = upstream
+  # default = upstream
+  default = current
 [http]
   cookiefile = /Users/mickeyreiss/.gitcookies
 [pull]
 	rebase = true
 [user]
 	useConfigOnly = true
-	signingkey = 47C64C4168B9B69F20BACB6349C2D4872FCD9D9E
+	signingkey = 9CAF4DA26042658BC60702EA980B0179C5590489
 	name = Mickey Reiss
-	email = mickey@visor.com
 [diff "sopsdiffer"]
 	textconv = sops -d

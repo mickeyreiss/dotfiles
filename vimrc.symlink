@@ -1,5 +1,6 @@
 call plug#begin('~/.vim/plugged')
 
+Plug 'goddenrich/vim-plz'
 Plug 'Shougo/vimshell'
 Plug 'sebdah/vim-delve'
 Plug 'bazelbuild/vim-ft-bzl'
@@ -184,10 +185,10 @@ let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go', 'java
 
 " vim-prettier
 let g:prettier#config#bracket_spacing = 'true'
-let g:prettier#autoformat = 1
+let g:prettier#autoformat = 0
 let g:prettier#autoformat_require_pragma = 0
-" let g:prettier#autoformat_config_present = 1
-" let g:prettier#quickfix_enabled = 0
+let g:prettier#autoformat_config_present = 1
+let g:prettier#quickfix_enabled = 1
 
 
 " Goyo
@@ -256,6 +257,8 @@ nmap ZW :w<cr>
 abbr W w
 nmap <Leader>nh :nohlsearch<CR>
 nmap <Leader><C-r> :source ~/.vimrc<CR> <bar> :PlugInstall<CR>
+" make Y consistent with C and D.
+nnoremap Y y$
 
 " Protect changes between writes. Default values of
 " updatecount (200 keystrokes) and updatetime

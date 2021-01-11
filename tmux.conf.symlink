@@ -77,11 +77,11 @@ set -g status-left ''
 
 
 # Sleep is a hacky rate-limit.
-WEATHER='#(curl -fs 'https://wttr.in?format=%%c+%%t+%%w' && sleep 600 || sleep 10)'
+WEATHER='#(curl -fs 'https://wttr.in/?format=%%c%%20%%t' && sleep 600 || sleep 10)'
 CPUSTATS='#{cpu_fg_color}#{cpu_percentage}#{cpu_icon}'
 RAMSTATS='#{ram_fg_color}#{ram_percentage}#{ram_icon}'
 
-set -g status-right "#[fg=colour8,bg=terminal] weather:#(if [[ ! -z "\$WEATHER" ]]; then echo "${WEATHER}"; else echo '-'; fi) #[fg=colour8,bg=terminal]cpu:$CPUSTATS #[fg=colour8,bg=terminal]ram:$RAMSTATS #[fg=colour8,bg=terminal]hostname:#(hostname) k8s:#(kubectl config current-context) #[fg=colour233,bg=colour241,bold] %m/%d #[fg=colour233,bg=colour245,bold] %H:%M:%S "
+set -g status-right "#[fg=colour8,bg=terminal] wx:#(if [[ ! -z "\$WEATHER" ]]; then echo "${WEATHER}"; else echo '-'; fi) #[fg=colour8,bg=terminal]cpu:$CPUSTATS #[fg=colour8,bg=terminal]ram:$RAMSTATS #[fg=colour8,bg=terminal]host:#(hostname) k8s:#(kubectl config current-context) #[fg=colour233,bg=colour241,bold] %Y-%m-%d #[fg=colour233,bg=colour245,bold] #(date -u +%%H:%%M:%%SZ) "
 
 # configure cpu.tmux
 set -g @cpu_low_fg_color "#[fg=colour8]"
@@ -93,7 +93,7 @@ set -g @ram_high_fg_color "#[fg=colour124]"
 set -g @cpu_percentage_format "%2.0f%%"
 set -g @ram_percentage_format "%2.0f%%"
 
-set -g status-right-length 300
+set -g status-right-length 120
 set -g status-left-length 20
 
 setw -g window-status-current-style fg=colour50,bg=colour238,bold
